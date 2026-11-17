@@ -16,7 +16,7 @@
 
 AgentDeck 把本机 Codex、Claude Code、Cursor、DeepSeek Harness 和 WorkBuddy 的会话集中到一个桌面工作台。它帮助你在多个 Agent 并行工作时找到需要处理的请求、订阅重要对话、回到原会话，并查看本机 Agent 活动时长。
 
-截图数据为隔离测试会话，不包含用户真实对话。
+界面截图包含隔离会话与真实聚合使用统计，不包含真实对话正文或个人信息。
 
 ![AgentDeck 界面](docs/assets/agentdeck-inbox.png)
 
