@@ -6,6 +6,14 @@ AgentDeck 是基于 [0xFANGO/agent-inbox](https://github.com/0xFANGO/agent-inbox
 
 1.0.2 更新了应用、窗口、任务栏、托盘以及 Windows 快捷方式图标：新图标用层叠卡片和三节点网络表示多 Agent 汇聚，取消了旧版的紫色下载箭头。
 
+## 使用统计
+
+AgentDeck 会从 Codex、Claude Code、DeepSeek Harness、WorkBuddy 和自定义 Agent 的本地事件时间戳中估算活动时长。支持近 7 / 14 / 30 天趋势、活跃天数、活跃日均、单日最长和来源分布；多个 Agent 并行工作时会按时间线去重，避免重复累计。
+
+![AgentDeck 使用统计](docs/assets/agentdeck-usage.png)
+
+Cursor 当前本地 JSONL 缺少逐条时间戳，因此会明确标记为“未计入”，不会使用文件修改时间猜测数据。统计表示 Agent 活动时间估算，不等同于人在电脑前的挂机时长。
+
 ## 使用
 
 支持 Windows 10 / 11 x64。解压完整应用目录后双击 **AgentDeck.exe**。无需安装 Node、SQLite 或 Raycast。请保留 exe 旁的 resources 和 DLL 文件。

@@ -20,6 +20,14 @@ AgentDeck 把本机 Codex、Claude Code、Cursor、DeepSeek Harness 和 WorkBudd
 
 ![AgentDeck 界面](docs/assets/agentdeck-inbox.png)
 
+## 使用统计
+
+AgentDeck 会从 Codex、Claude Code、DeepSeek Harness、WorkBuddy 和自定义 Agent 的本地事件时间戳中估算活动时长。支持近 7 / 14 / 30 天趋势、活跃天数、活跃日均、单日最长和来源分布；多个 Agent 并行工作时会按时间线去重，避免重复累计。
+
+![AgentDeck 使用统计](docs/assets/agentdeck-usage.png)
+
+Cursor 当前本地 JSONL 缺少逐条时间戳，因此会明确标记为“未计入”，不会使用文件修改时间猜测数据。统计表示 Agent 活动时间估算，不等同于人在电脑前的挂机时长。
+
 ## 能做什么
 
 - **统一收件箱**：汇总本机多个 Agent 的历史会话与当前会话，支持搜索、来源筛选和状态筛选。
