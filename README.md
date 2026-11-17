@@ -97,6 +97,8 @@ npm run dist
 - OpenAI Codex 参与需求拆解、前后端实现、问题定位、自动化测试、打包发布和文档迭代。
 - 所有外部操作和最终结果均经过实际运行、测试与人工检查。
 
+完整角色说明见 [CONTRIBUTORS.md](CONTRIBUTORS.md)。
+
 ## 上游与许可
 
 AgentDeck 基于 [0xFANGO/agent-inbox](https://github.com/0xFANGO/agent-inbox) 的 `7ad035954e8cff1a16441ba0882496b7fb6961ed` 版本二次开发，与原作者无隶属或官方关联。

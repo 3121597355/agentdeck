@@ -4,6 +4,8 @@ AgentDeck 是面向 Windows 的本地优先多 Agent 工作台，把 Codex、Cla
 
 AgentDeck 是基于 [0xFANGO/agent-inbox](https://github.com/0xFANGO/agent-inbox)（MIT）二次开发并由社区独立维护的非官方 Windows 版本。产品方向、需求拆解、编写与验收由 [@3121597355](https://github.com/3121597355) 主导，使用 OpenAI Codex 作为结对开发 Agent 完成代码实现、测试、调试与发布迭代。
 
+完整角色说明见 [CONTRIBUTORS.md](CONTRIBUTORS.md)。
+
 1.0.2 更新了应用、窗口、任务栏、托盘以及 Windows 快捷方式图标：新图标用层叠卡片和三节点网络表示多 Agent 汇聚，取消了旧版的紫色下载箭头。
 
 ## 使用统计

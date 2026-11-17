@@ -3,7 +3,7 @@
   "productName": "AgentDeck",
   "version": "1.0.2",
   "description": "集中管理多 Agent 会话、待处理提醒与本地使用统计的 Windows 桌面工作台",
-  "author": "AgentDeck contributors; upstream 0xFANGO",
+  "author": "winter solstice; co-developed with OpenAI Codex; upstream 0xFANGO",
   "license": "MIT",
   "main": "build/main.cjs",
   "scripts": {
