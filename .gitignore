@@ -1,0 +1,26 @@
+node_modules/
+build/
+.test-build/
+*.log
+
+# Build and test artifacts
+dist/
+out/
+release/
+coverage/
+work/
+
+# Local application data and databases
+*.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

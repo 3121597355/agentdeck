@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>AgentDeck · 多 Agent 会话与使用统计</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="titlebar"><div><button id="minimize" aria-label="最小化">—</button><button id="hide" aria-label="收起到托盘">×</button></div></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-symbol" aria-hidden="true"><span data-icon="inbox"></span></div><strong>AgentDeck</strong></div>
+      <nav aria-label="会话导航">
+        <button class="nav-item active" data-view="inbox"><span class="nav-icon" data-icon="inbox"></span>收件箱<span class="nav-count" id="count-inbox">0</span></button>
+        <button class="nav-item" data-view="waiting"><span class="nav-icon" data-icon="bell"></span>待我处理<span class="nav-count waiting-count" id="count-waiting">0</span></button>
+        <button class="nav-item" data-view="all"><span class="nav-icon" data-icon="layers"></span>全部会话<span class="nav-count" id="count-all">0</span></button>
+        <button class="nav-item" data-view="handled"><span class="nav-icon" data-icon="check"></span>已处理<span class="nav-count" id="count-handled">0</span></button>
+        <button class="nav-item" data-view="usage"><span class="nav-icon" data-icon="chart"></span>使用统计</button>
+      </nav>
+      <div class="sidebar-bottom"><button class="nav-item" data-view="settings"><span class="nav-icon" data-icon="settings"></span>设置与接入</button><span id="refresh-status" class="connection-indicator"><i class="online-dot"></i>正在连接</span></div>
+    </aside>
+    <main>
+      <header class="page-header"><h1 id="page-title">收件箱</h1><div class="header-actions"><button class="icon-button toolbar-button" id="theme-toggle" aria-label="切换到夜间模式"><span id="theme-icon"></span><span id="theme-label" class="sr-only">夜间</span></button><button class="icon-button toolbar-button" id="refresh" aria-label="刷新会话" title="刷新会话"><span data-icon="refresh"></span></button></div></header>
+      <div id="notice" class="notice hidden" role="status"></div>
+      <div id="workspace">
+        <div class="toolbar"><label class="search-box"><span data-icon="search"></span><input id="search" aria-label="搜索会话" placeholder="搜索会话" autocomplete="off"></label><select id="agent-filter" aria-label="筛选 Agent"><option value="">全部 Agent</option><option value="codex">Codex</option><option value="claude">Claude Code</option><option value="cursor">Cursor</option><option value="dsh">DeepSeek Harness</option><option value="workbuddy">WorkBuddy</option></select><select id="status-filter" aria-label="筛选状态"><option value="">全部状态</option><option value="needs_input">待输入</option><option value="running">运行中</option><option value="ready">本轮结束</option><option value="done">已完成</option><option value="idle">历史记录</option><option value="unknown">状态未确认</option></select></div>
+        <div class="list-heading"><span id="list-meta">正在读取会话</span></div>
+        <div class="content-grid" id="content-grid"><section id="session-list" class="session-list" aria-label="会话列表"></section><aside id="detail" class="detail-panel hidden"></aside></div>
+      </div>
+      <div id="settings-page" class="hidden"></div>
+      <div id="usage-page" class="hidden" aria-live="polite"></div>
+    </main>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <dialog id="connection-dialog"><div class="dialog-top"><button id="dialog-close" class="icon-button" aria-label="关闭">×</button></div><h2 id="dialog-title">接入客户端</h2><p id="dialog-description"></p><div id="connection-preview"></div><div class="dialog-actions"><button id="dialog-cancel" class="button secondary">取消</button><button id="dialog-confirm" class="button primary">接入并备份配置</button></div></dialog>
+  <dialog id="usage-agent-dialog" class="usage-agent-dialog">
+    <form id="usage-agent-form">
+      <div class="dialog-top"><button id="usage-agent-close" type="button" class="icon-button" aria-label="关闭">×</button></div>
+      <p class="usage-kicker">CUSTOM SOURCE</p>
+      <h2 id="usage-agent-title">添加 Agent</h2>
+      <p class="usage-agent-intro">只读统计本地记录中的时间戳。首版支持 JSONL 或逐行 JSON 文件，保存后立即刷新统计。</p>
+      <input id="usage-agent-id" type="hidden">
+      <div class="usage-agent-grid">
+        <label class="usage-field"><span>Agent 名称</span><input id="usage-agent-name" maxlength="60" required placeholder="例如 Cline、OpenHands"></label>
+        <label class="usage-field usage-field-wide"><span>本地文件或目录</span><div class="usage-path-control"><input id="usage-agent-path" required autocomplete="off" placeholder="选择文件或目录"><button id="usage-pick-file" type="button" class="button secondary">选择文件</button><button id="usage-pick-directory" type="button" class="button secondary">选择目录</button></div></label>
+        <label class="usage-field"><span>文件模式</span><input id="usage-agent-pattern" value="*.jsonl" required placeholder="*.jsonl"><small>多个模式用英文逗号分隔</small></label>
+        <label class="usage-field"><span>时间戳字段</span><input id="usage-agent-field" value="timestamp" required placeholder="event.created_at"><small>支持点号读取嵌套字段</small></label>
+        <label class="usage-field"><span>时间格式</span><select id="usage-agent-unit"><option value="auto">自动识别</option><option value="iso">ISO 日期字符串</option><option value="ms">Unix 毫秒</option><option value="seconds">Unix 秒</option></select></label>
+        <label class="usage-field usage-enabled"><input id="usage-agent-enabled" type="checkbox" checked><span>立即启用并计入统计</span></label>
+      </div>
+      <details id="usage-agent-session-fields" class="usage-agent-mapping">
+        <summary>会话字段映射</summary>
+        <p>用于把通用 JSONL 识别为 Agent 会话。常用字段可保留默认值，记录格式变化时再修改。</p>
+        <div class="usage-agent-grid">
+          <label class="usage-field"><span>会话 ID 字段</span><input id="usage-agent-session-id-field" value="session_id"><small>找不到时也会尝试 sessionId、thread_id、id</small></label>
+          <label class="usage-field"><span>状态 / 事件字段</span><input id="usage-agent-event-field" value="type"><small>running、needs_input、resolved、stopped 等</small></label>
+          <label class="usage-field"><span>标题字段</span><input id="usage-agent-title-field" value="title"></label>
+          <label class="usage-field"><span>工作目录字段</span><input id="usage-agent-cwd-field" value="cwd"></label>
+          <label class="usage-field"><span>摘要字段</span><input id="usage-agent-summary-field" value="summary"></label>
+          <label class="usage-field"><span>请求 ID 字段</span><input id="usage-agent-request-field" value="request_id"><small>用于精确清除待处理请求</small></label>
+          <label class="usage-field usage-field-wide"><span>回跳链接模板（可选）</span><input id="usage-agent-jump-url" placeholder="myagent://threads/{sessionId}"><small>留空时点击“返回会话”会复制会话 ID</small></label>
+        </div>
+      </details>
+      <p class="usage-agent-safety">AgentDeck 仅扫描匹配文件并提取时间戳；不会执行文件内容，也不会复制或上传对话正文。</p>
+      <div class="dialog-actions"><button id="usage-agent-cancel" type="button" class="button secondary">取消</button><button id="usage-agent-save" type="submit" class="button primary">保存并统计</button></div>
+    </form>
+  </dialog>
+  <script src="renderer.js"></script>
+</body>
+</html>

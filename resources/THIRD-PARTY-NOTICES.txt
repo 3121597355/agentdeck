@@ -1,0 +1,24 @@
+Agent Inbox upstream source: https://github.com/0xFANGO/agent-inbox
+Copyright (c) 2026 0xFANGO, MIT License (see LICENSE).
+
+SQLite 3.54.1 Windows x64 CLI: https://www.sqlite.org/2026/sqlite-tools-win-x64-3540100.zip
+SQLite is in the public domain: https://www.sqlite.org/copyright.html
+
+Electron and Chromium components: licenses are included alongside the application
+in LICENSE.electron.txt and LICENSES.chromium.html.
+The Windows application icon is an original geometric drawing generated for this fork.
+
+Agent identifying marks are SVG assets from the upstream project:
+https://github.com/0xFANGO/agent-inbox/blob/main/assets/openai.svg
+https://github.com/0xFANGO/agent-inbox/blob/main/assets/claude.svg
+The OpenAI/Codex mark is displayed in black; the Claude mark in its terracotta color.
+OpenAI and Claude names and marks remain the property of OpenAI and Anthropic,
+respectively. They identify supported sources and do not imply endorsement.
+
+Cursor, DeepSeek Harness, and WorkBuddy identifying icons are copied unchanged
+from the locally installed applications' distributed resources:
+Cursor resources/app/resources/win32/code_150x150.png;
+DeepSeek Harness resources/icon.png;
+WorkBuddy app.asar/resources/icon.png.
+Their names and marks remain the property of their respective owners.
+These marks identify supported sources and do not imply endorsement.

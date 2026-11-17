@@ -1,0 +1,57 @@
+{
+  "name": "agentdeck",
+  "productName": "AgentDeck",
+  "version": "1.0.2",
+  "description": "集中管理多 Agent 会话、待处理提醒与本地使用统计的 Windows 桌面工作台",
+  "author": "AgentDeck contributors; upstream 0xFANGO",
+  "license": "MIT",
+  "main": "build/main.cjs",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "npm run build && electron .",
+    "test": "node scripts/test.mjs",
+    "typecheck": "tsc --noEmit",
+    "dist": "npm run build && electron-builder --win dir --x64"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "io.agentdeck.desktop",
+    "electronDist": "node_modules/electron/dist",
+    "productName": "AgentDeck",
+    "directories": {
+      "output": "../../work/windows-package"
+    },
+    "files": [
+      "build/main.cjs",
+      "build/preload.cjs",
+      "desktop/index.html",
+      "desktop/renderer.js",
+      "desktop/style.css",
+      "desktop/agent-icons/*",
+      "LICENSE",
+      "README.zh-CN.md"
+    ],
+    "extraResources": [
+      {
+        "from": "build/agent-inbox.mjs",
+        "to": "agent-inbox.mjs"
+      },
+      {
+        "from": "resources",
+        "to": "app-assets"
+      }
+    ],
+    "win": {
+      "target": "dir",
+      "icon": "resources/icon.ico",
+      "signExecutable": false
+    },
+    "asar": true
+  }
+}
